@@ -4,6 +4,11 @@ const axios = require("axios").default
 const FormData = require('form-data')
 const express = require("express"),
 app = express();
+const bodyParser = require('body-parser');
+//To parse URL encoded data
+app.use(bodyParser.urlencoded({ extended: false }))
+//To parse json data
+app.use(bodyParser.json())
 
 //https://www.youtube.com/watch?v=UbNtHMy4ewA
 
@@ -51,24 +56,63 @@ function gettingVideoInfo(arr, callback, n = 0, info = []) {
 
 
 app.all('/v-info', function(req, res) {
-  let object = {
-    list: `
-      https://www.youtube.com/watch?v=orJSJGHjBLI
-      https://www.youtube.com/watch?v=UbNtHMy4ewA
-    `,
-    type: "mp3"
-  }
-  
-  var urls = object.list.trim().split("\n")
-  
-  gettingVideoInfo(urls, function(info){
-    //res.setHeader("Content-Type", "application/json")
-    //res.send(JSON.stringify(info, null, 2))
-    res.render("index", {
-      info: info
+  if (req.body.vk) {
+    download(req, res)
+  } else if(req.body.url) {
+    let object = {
+      list: req.body.url,
+      type: "mp3"
+    }
+    
+    var urls = object.list.trim().split("**")
+    
+    gettingVideoInfo(urls, function(info){
+      //res.setHeader("Content-Type", "application/json")
+      //res.send(JSON.stringify(info, null, 2))
+      res.render("index", {
+        info: info
+      })
     })
-  })
+  }
 })
+
+function download(req, res) {
+  let fd = new FormData()
+    //append user data
+    fd.append('vid', req.body.vid);
+    fd.append('k', req.body.vk);
+    //start the request
+    axios.post("https://yt1s.com/api/ajaxConvert/convert", fd, {
+      headers: fd.getHeaders()
+    }).then(json => {
+      json = json.data;
+      if (json.status === "ok") {
+        let winReversedChars = /\\|\/|\*|\:|\?|\"|\||\<|\>/ig
+      }
+      //console.log(json)
+      res.redirect(json.dlink)
+    });
+}
+/*
+app.all('/download', function(req, res) {
+  //console.log(req.body, req.body.vid)
+  let fd = new FormData()
+    //append user data
+    fd.append('vid', req.body.vid);
+    fd.append('k', req.body.vk);
+    //start the request
+    axios.post("https://yt1s.com/api/ajaxConvert/convert", fd, {
+      headers: fd.getHeaders()
+    }).then(json => {
+      json = json.data;
+      if (json.status === "ok") {
+        let winReversedChars = /\\|\/|\*|\:|\?|\"|\||\<|\>/ig
+      }
+      console.log(json)
+      res.redirect(json.dlink)
+    });
+})
+*/
 app.get('/', function(req, res) {
   res.render("index")
 })
