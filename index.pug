@@ -90,10 +90,13 @@ html
       .resItems {
       margin: 10px;
       }
-      .vtitle, .downContainer {
+      .vtitle, .downContainer, .type {
       font-family: verdana;
       font-size: 20px;
       font-weight: bold;
+      }
+      .type {
+      margin: 5px;
       }
       .downContainer {
       margin: 3px;
@@ -132,26 +135,29 @@ html
             if info
               each i in info 
                 div.resItems
+                  //if there's errors display it
                   if i.error
                     div.err !{i.error}
                     div.err Reason: !{i.status}
                   else if i.title 
+                    //if the file is ready display download options
                     div(class="res", data-id=`${i.id}`) 
                       div.vtitle !{i.title}
                       if i.mp3
                         div.downContainer 
-                          span MP3: 
-                          select 
+                        form(action="v-info", method="post")
+                          span.type MP3: 
+                          select(name="vk") 
                             each q in i.mp3
-                              option(data-k=`${q.k}`) !{q.q} Size: !{q.size}
+                              option(value=`${q.k}`) !{q.q} Size: !{q.size}
+                          input(type="hidden" value=`${i.id}` name="vid")
                           input(type="submit", value="Download", class="down-btn")
                       if i.mp4
                         div.downContainer 
-                          span MP4: 
-                          select 
+                        form(action="v-info", method="post")
+                          span.type MP4:  
+                          select(name="vk")
                             each q in i.mp4
-                              option(data-k=`${q.k}`) !{q.q} Size: !{q.size}
+                              option(value=`${q.k}`) !{q.q} Size: !{q.size}
+                          input(type="hidden" value=`${i.id}` name="vid")
                           input(type="submit", value="Download", class="down-btn")
-  
-
-            
