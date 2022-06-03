@@ -1,0 +1,157 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width,initial-scale=1.0')
+    title
+    style(type='text/css').
+      body, html {
+      padding: 0;
+      margin: 0;
+      }
+      nav {
+      background: #000;
+      padding: 30px;
+      color: #fff;
+      }
+      .title {
+      text-align: center;
+      font-size: 25px;
+      font-weight: bold;
+      font-family: verdana;
+      }
+      .title-colored {
+      color: #03fab3;
+      }
+      .header-body {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      width: 100%;
+      }
+      .form, form {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: auto;
+      width: 100%;
+      }
+      .field {
+      min-width: 50%;
+      }
+      .field, .btn {
+      padding: 15px;
+      }
+      .btn {
+      border: 0;
+      background: #000;
+      color: #fff;
+      font-weight: bold;
+      font-family: verdana;
+      cursor: pointer;
+      }
+      .btn:hover {
+      background: #0080ff;
+      }
+      .output {
+      margin-top: 30px;
+      width: 100%;
+      text-align: center;
+      }
+      .down-links {
+      width: 100%;
+      }
+      .down {
+      padding: 10px 20px;
+      text-align: center;
+      color: #fff;
+      background: #000;
+      margin: 5px;
+      font-weight: bold;
+      font-family: verdana;
+      cursor: pointer;
+      }
+      .down:hover {
+      background: #0080ff;
+      }
+      .err {
+      color: red;
+      font-weight: bold;
+      font-family: verdana;
+      cursor: pointer;
+      text-align: center;
+      }
+      .results {
+      width: 90%;
+      margin: auto;
+      }
+      .resItems {
+      margin: 10px;
+      }
+      .vtitle, .downContainer {
+      font-family: verdana;
+      font-size: 20px;
+      font-weight: bold;
+      }
+      .downContainer {
+      margin: 3px;
+      }
+      select {
+      padding: 10px 20px;
+      background: #111;
+      color: rgb(200,200,200);
+      }
+      .down-btn {
+      border:0;
+      padding: 10px 20px;
+      color: #fff;
+      background: deepskyblue;
+      text-align: center;
+      margin: 2px;
+      }
+      .down-btn:hover {
+      background: red;
+      }
+  header
+    nav
+      .title
+        | YouTube 
+        span.title-colored Downloader
+    .header-body
+      .form
+        // index.php
+        form(action='v-info' method='post')
+          input.field(type='text' name='url' placeholder='Paste YouTube link here')
+          input.btn(type='submit' name='sub' value='Search')
+      .output
+        .down-links
+          if(info)
+          div.results
+            if info
+              each i in info 
+                div.resItems
+                  if i.error
+                    div.err !{i.error}
+                    div.err Reason: !{i.status}
+                  else if i.title 
+                    div(class="res", data-id=`${i.id}`) 
+                      div.vtitle !{i.title}
+                      if i.mp3
+                        div.downContainer 
+                          span MP3: 
+                          select 
+                            each q in i.mp3
+                              option(data-k=`${q.k}`) !{q.q} Size: !{q.size}
+                          input(type="submit", value="Download", class="down-btn")
+                      if i.mp4
+                        div.downContainer 
+                          span MP4: 
+                          select 
+                            each q in i.mp4
+                              option(data-k=`${q.k}`) !{q.q} Size: !{q.size}
+                          input(type="submit", value="Download", class="down-btn")
+  
+
+            
