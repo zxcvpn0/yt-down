@@ -1,0 +1,33 @@
+{
+  "name": "yt-down",
+  "version": "1.0.0",
+  "description": "youtube downloader",
+  "main": "index.js",
+  "scripts": {
+    "start": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zxcvpn0/yt-down.git"
+  },
+  "keywords": [
+    "youtube",
+    "downloader"
+  ],
+  "author": ".............",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zxcvpn0/yt-down/issues"
+  },
+  "homepage": "https://github.com/zxcvpn0/yt-down#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "axios": "0.21.4",
+    "pug": "3.0.2",
+    "body-parser": "1.20.0",
+    "form-data": "4.0.0"
+  },
+  "engines": {
+    "node": "v12.9.1"
+  }
+}
