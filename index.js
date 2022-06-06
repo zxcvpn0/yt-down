@@ -157,26 +157,6 @@ function download(req, res) {
     res.redirect(json.dlink)
   });
 }
-/*
-app.all('/download', function(req, res) {
-  //console.log(req.body, req.body.vid)
-  let fd = new FormData()
-    //append user data
-    fd.append('vid', req.body.vid);
-    fd.append('k', req.body.vk);
-    //start the request
-    axios.post("https://yt1s.com/api/ajaxConvert/convert", fd, {
-      headers: fd.getHeaders()
-    }).then(json => {
-      json = json.data;
-      if (json.status === "ok") {
-        let winReversedChars = /\\|\/|\*|\:|\?|\"|\||\<|\>/ig
-      }
-      console.log(json)
-      res.redirect(json.dlink)
-    });
-})
-*/
 app.get('/', function(req, res) {
   res.render("index")
 })
